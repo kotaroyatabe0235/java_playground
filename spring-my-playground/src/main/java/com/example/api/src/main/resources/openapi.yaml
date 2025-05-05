@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: Task Management API
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /api/tasks:
+    get:
+      responses:
+        "200":
+          description: A list of tasks
+      summary: Retrieve a list of tasks
+      x-accepts:
+      - application/json
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+        required: true
+      responses:
+        "201":
+          description: Task created successfully
+      summary: Create a new task
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /api/tasks/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Task deleted successfully
+      summary: Delete a specific task
+      x-accepts:
+      - application/json
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Task details
+      summary: Retrieve a specific task
+      x-accepts:
+      - application/json
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+        required: true
+      responses:
+        "200":
+          description: Task updated successfully
+      summary: Update a specific task
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    Task:
+      example:
+        description: description
+        id: id
+        completed: true
+        title: title
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        completed:
+          type: boolean
+      type: object
